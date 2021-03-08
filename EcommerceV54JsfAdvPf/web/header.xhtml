@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:panelGroup rendered="#{sessionScope.isLogin == false}">
+        <p:commandButton value="Login" type="button" onclick="PF('dialogLogin').show()" style="float: right;" icon="fa fa-sign-in"/> &nbsp;
+        <p:commandButton value="Register" type="button" onclick="PF('dialogRegister').show()" style="float: right;" icon="fa fa-user-plus"/>
+
+    </h:panelGroup>
+
+    <h:form id ="loginForm">
+        <p:dialog id="dialogLogin" widgetVar="dialogLogin" header="Login" closable="true" height="120" draggable="false" resizable="false">
+            <p:outputLabel for="email" value="Email"/>&nbsp;
+            <p:inputText id="email" value="#{loginManagedBean.email}" size="16" required="true" requiredMessage="Email is required">
+            </p:inputText>
+            <br/>
+            <br/>
+            <p:outputLabel for="password" value="Password"/>&nbsp;
+            <p:password id="password" value="#{loginManagedBean.password}" size="16" required="true" requiredMessage="Password is required">
+                <f:validateLength minimum="4"/>
+            </p:password>
+            <br/>
+            <br/>
+            <p:commandButton type="reset" value="Clear" icon="pi pi-undo" />&nbsp;
+            <p:commandButton type="submit" value="Submit" process="@form" actionListener="#{loginManagedBean.login}" icon="pi pi-sign-in" />
+
+            <p:growl>
+                <p:autoUpdate />
+            </p:growl>
+        </p:dialog>
+    </h:form>
+
+    <h:form id="registerForm">
+        <p:dialog id="dialogRegister" widgetVar="dialogRegister" header="Create New Account" closable="true" draggable="false" resizable="false">
+            <p:panelGrid>
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="firstName" value="First Name: "/>
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="firstName" value="#{customerManagementManagedBean.customer.firstName}" required="true" requiredMessage="First Name is required"/>
+                    </p:column>
+                    <p:column>
+                        <p:message for="firstName"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="lastName" value="Last Name: "/>
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="lastName" value="#{customerManagementManagedBean.customer.lastName}" required="true" requiredMessage="Last Name is required"/>
+                    </p:column>
+                    <p:column>
+                        <p:message for="lastName"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="email" value="Email: "/>
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="email" value="#{customerManagementManagedBean.customer.email}" required="true" requiredMessage="Email is required"/>
+                    </p:column>
+                    <p:column>
+                        <p:message for="email"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="password" value="Password: "/>
+                    </p:column>
+                    <p:column>
+                        <p:password id="password" value="#{customerManagementManagedBean.customer.password}" required="true" requiredMessage="Password is required"/>
+                    </p:column>
+                    <p:column>
+                        <p:message for="password"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="password2" value="Password: "/>
+                    </p:column>
+                    <p:column>
+                        <p:password id="password2" value="#{customerManagementManagedBean.password}" required="true" requiredMessage="Password is required"/>
+                    </p:column>
+                    <p:column>
+                        <p:message for="password2"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="3">
+                        <p:commandButton type="reset" value="Clear" icon="fa fa-undo" />&nbsp;
+                        <p:commandButton value="Register" actionListener="#{customerManagementManagedBean.createNewCustomer}" update="@form" icon="fa fa-sign-in"/>
+                    </p:column>
+
+                </p:row>
+            </p:panelGrid>
+        </p:dialog>
+    </h:form>
+
+    <h:panelGroup rendered="#{sessionScope.isLogin == true}">
+        <h:form id="logoutForm">
+            <h:outputText value="Welcome, #{sessionScope.currentCustomer.firstName} #{sessionScope.currentCustomer.lastName}"/>&nbsp;
+            <p:commandButton value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" style="float: right;"/>
+        </h:form>
+
+        <br/>
+        <br/>
+        <h:form>
+            <p:menubar>
+
+                <p:menuitem value = "Home" style="margin:1px 10px 1px 1px;" icon = "fa fa-home" outcome="/index.xhtml"/>
+                <p:menuitem value = "Shopping Cart" style="margin:1px 10px 1px 1px;" icon = "fa fa-shopping-cart" outcome="/ecommerce/shoppingCart.xhtml"/>
+                <p:menuitem value="Transaction History" style="margin:1px 10px 1px 1px;" icon="fa fa-list-alt" outcome="/ecommerce/transactionHistory.xhtml"/>
+
+            </p:menubar>
+
+        </h:form>
+    </h:panelGroup>
+
+</ui:composition>
+
+

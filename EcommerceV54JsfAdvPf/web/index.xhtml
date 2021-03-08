@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/templates/defaultTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp">
+    <ui:define name="content">
+
+        <ezcomp:Breadcrumb pageName="Home"/>
+
+        <div style="text-align: center">
+            <h3>Browse All Products</h3>
+
+            <h:form id="formAllProducts" rendered="#{sessionScope.isLogin == true}">
+                <!--                <p:message>
+                                    <p:autoUpdate/>
+                                </p:message>-->
+
+                <p:dataTable id="dataTableAllProducts" value="#{productManagementManagedBean.saleTransactionLineItems}" var="items">
+
+                    <p:column headerText="SKU Code" sortBy="#{items.productEntity.skuCode}">
+                        <h:outputText value="#{items.productEntity.skuCode}"/>
+                    </p:column>
+
+                    <p:column headerText="Product ID" sortBy="#{items.productEntity.productId}">
+                        <h:outputText value="#{items.productEntity.productId}"/>
+                    </p:column>
+
+                    <p:column headerText="Name" sortBy="#{items.productEntity.name}">
+                        <h:outputText value="#{items.productEntity.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Description" sortBy="#{items.productEntity.description}">
+                        <h:outputText value="#{items.productEntity.description}"/>
+                    </p:column>
+
+                    <p:column headerText="Quantity on Hand" sortBy="#{items.productEntity.quantityOnHand}">
+                        <h:outputText value="#{items.productEntity.quantityOnHand}"/>
+                    </p:column>
+
+                    <p:column headerText="Unit Price" sortBy="#{items.productEntity.unitPrice}">
+                        <h:outputText value="#{items.productEntity.unitPrice}">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Category" sortBy="#{items.productEntity.categoryEntity.name}">
+                        <h:outputText value="#{items.productEntity.categoryEntity.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Quantity to Order">
+                        <p:inputText id="txt" value="#{items.quantity}"/>
+                        <p:slider for="txt" maxValue="#{items.productEntity.quantityOnHand}"/>
+                        <p:commandButton title="Add to Cart" value="Add to Cart" actionListener="#{productManagementManagedBean.addToCart}" icon="fa fa-shopping cart" process="@this,txt" update="@form">
+                            <f:attribute name="itemToBuy" value="#{items}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
+
+        <h:form id="formAllProducts2" rendered="#{sessionScope.isLogin == false}">
+            <!--                <p:message>
+                                <p:autoUpdate/>
+                            </p:message>-->
+
+            <p:dataTable id="dataTableAllProducts" value="#{productManagementManagedBean.saleTransactionLineItems}" var="items">
+
+                <p:column headerText="SKU Code" sortBy="#{items.productEntity.skuCode}">
+                    <h:outputText value="#{items.productEntity.skuCode}"/>
+                </p:column>
+
+                <p:column headerText="Product ID" sortBy="#{items.productEntity.productId}">
+                    <h:outputText value="#{items.productEntity.productId}"/>
+                </p:column>
+
+                <p:column headerText="Name" sortBy="#{items.productEntity.name}">
+                    <h:outputText value="#{items.productEntity.name}"/>
+                </p:column>
+
+                <p:column headerText="Description" sortBy="#{items.productEntity.description}">
+                    <h:outputText value="#{items.productEntity.description}"/>
+                </p:column>
+
+                <p:column headerText="Quantity on Hand" sortBy="#{items.productEntity.quantityOnHand}">
+                    <h:outputText value="#{items.productEntity.quantityOnHand}"/>
+                </p:column>
+
+                <p:column headerText="Unit Price" sortBy="#{items.productEntity.unitPrice}">
+                    <h:outputText value="#{items.productEntity.unitPrice}">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Category" sortBy="#{items.productEntity.categoryEntity.name}">
+                    <h:outputText value="#{items.productEntity.categoryEntity.name}"/>
+                </p:column>
+
+                <p:column headerText="Quantity to Order">
+                    <p:inputText id="txt" value="#{items.quantity}"/>
+                    <p:slider for="txt" maxValue="#{items.productEntity.quantityOnHand}"/>
+                    <p:commandButton title="Add to Cart" value="Add to Cart" actionListener="#{productManagementManagedBean.askToLogin}" icon="fa fa-shopping cart" process="@this,txt" update="formAllProducts2:dataTableAllProducts">
+                        <f:attribute name="itemToBuy" value="#{items}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+
+

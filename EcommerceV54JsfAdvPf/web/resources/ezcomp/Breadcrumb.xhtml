@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="pageName" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <style>
+            .fa {
+                color: black;
+            }
+
+            .words {
+                color: black;
+            }
+
+        </style>
+        <h:form id="formMain">
+            <p:breadCrumb homeDisplay="false">
+                <p:menuitem icon="fa fa-home" url="#{application.contextPath}/index.xhtml" style="text-decoration-line: none;" />
+
+                <p:menuitem value="Ecommerce" rendered="#{cc.attrs.pageName == 'checkout'} || #{cc.attrs.pageName == 'transactionHistory'} "/>
+                <p:menuitem class="words" icon="fa fa-shopping-cart" value="Shopping Cart" url="#{application.contextPath}/ecommerce/shoppingCart.xhtml" rendered="#{cc.attrs.pageName == 'cart'}" />
+                <p:menuitem class="words" icon="fa fa-list-alt" value="Transaction History" url="#{application.contextPath}/ecommerce/transactionHistory.xhtml" rendered="#{cc.attrs.pageName == 'transactionHistory'}"/>
+
+            </p:breadCrumb>
+        </h:form>
+    </cc:implementation>
+</html>

@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../templates/defaultTemplate.xhtml"
+                xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <ezcomp:Breadcrumb pageName="transactionHistory"/>
+
+        <h:form id="viewTransaction">
+            <p:dataTable var="txn" value="#{saleTransactionManagedBean.sales}">
+                <f:facet name="header">
+                    Sales Transaction
+                </f:facet>
+
+                <p:column headerText="Transaction ID">
+                    <h:outputText value="#{txn.saleTransactionId}"/>
+                </p:column>
+
+                <p:column headerText="Number of items">
+                    <h:outputText value="#{txn.totalLineItem}"/>
+                </p:column>
+                <p:column headerText="Total Amount">
+                    <h:outputText value="#{txn.totalAmount}"/>
+                </p:column>
+                <p:column headerText="Date of Transaction">
+                    <h:outputText value="#{txn.transactionDateTime}"/>
+                </p:column>
+                <p:column headerText="Details">
+                    <p:commandButton icon="fa fa-list" value="Purchase Details" title="Purchase Details" actionListener="#{saleTransactionManagedBean.getLineItems}" update="viewTransaction lineItems" oncomplete="PF('dialogViewLineItems').show()">
+                        <f:attribute name="transaction" value="#{txn}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+        <h:form id="lineItems">
+            <p:dialog header='Purchase Details' widgetVar="dialogViewLineItems" closable="true" resizable="false">
+                <p:dataList var="items" value="#{saleTransactionManagedBean.lineItem}" type="unordered" itemType="none" rows="5" rowsPerPageTemplate="5,10,20">
+                    <p:panelGrid>
+                        <h:outputText value="Product Name: " style="font-weight: bold"/>&nbsp;
+                        <h:outputText value="#{items.productEntity.name}"/>&nbsp;
+
+                        <h:outputText value="Product Rating: " style="font-weight: bold"/>&nbsp;
+                        <h:outputText value="#{items.productEntity.productRating}"/>&nbsp;
+
+                        <h:outputText value="Quantity: " style="font-weight: bold"/>&nbsp;
+                        <h:outputText value="#{items.quantity}"/>&nbsp;
+
+                        <h:outputText value="Unit Price: " style="font-weight: bold"/>&nbsp;
+                        <h:outputText value="#{items.unitPrice}"/>&nbsp;
+
+                        <h:outputText value="Subtotal Amount: " style="font-weight: bold"/>&nbsp;
+                        <h:outputText value="#{items.subTotal}"/>&nbsp;
+                    </p:panelGrid>
+                </p:dataList>
+            </p:dialog>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

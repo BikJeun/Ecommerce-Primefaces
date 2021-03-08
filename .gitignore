@@ -1,0 +1,41 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# User defined
+nbproject/private/
+build/
+dist/
+
+PointOfSaleSystemV54-ejb/nbproject/private/
+PointOfSaleSystemV54-ejb/build/
+PointOfSaleSystemV54-ejb/dist/
+
+PointOfSaleSystemV54Library/nbproject/private/
+PointOfSaleSystemV54Library/build/
+PointOfSaleSystemV54Library/dist/
+
+EcommerceV54JsfAdvPf/nbproject/private/
+EcommerceV54JsfAdvPf/build/
+EcommerceV54JsfAdvPf/dist/
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+EcommerceV54JsfAdvPf/nbproject/private/
