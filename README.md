@@ -10,4 +10,4 @@ Cart
 4) Checkout Shopping Cart
 5) View Sale Transactions History
 
-More use cases may be implemented in the future.
+
