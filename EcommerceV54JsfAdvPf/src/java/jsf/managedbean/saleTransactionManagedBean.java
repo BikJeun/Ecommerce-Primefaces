@@ -12,11 +12,16 @@ import entity.SaleTransactionLineItemEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import util.exception.CustomerNotFoundException;
 
 /**
  *
@@ -38,13 +43,22 @@ public class saleTransactionManagedBean implements Serializable {
      * Creates a new instance of saleTransactionManagedBean
      */
     public saleTransactionManagedBean() {
+        cus = new CustomerEntity();
+        sales = new ArrayList<>();
+    }
+
+    @PostConstruct
+    public void postConstruct() {
         cus = (CustomerEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentCustomer");
         if (cus != null) {
-            sales = cus.getSaleTransactionEntities();
+            try {
+                sales = customerEntitySessionBean.retrieveCustomerById(cus.getCustomerId()).getSaleTransactionEntities();
+            } catch (CustomerNotFoundException ex) {
+                Logger.getLogger(saleTransactionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             sales = new ArrayList<>();
         }
-
     }
 
     public void getLineItems(ActionEvent event) {
